@@ -7,7 +7,7 @@
 ### Themenblöcke
 
 
-[The Three Ways](./Theorie/T2_The_Three_Ways.md)
+[T2: The Three Ways](./Theorie/T2_The_Three_Ways.md)
 
 
 ### Andere Links
