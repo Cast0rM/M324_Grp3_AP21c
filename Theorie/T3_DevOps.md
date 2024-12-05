@@ -54,5 +54,5 @@ Ein **Minimum Viable Product (MVP)** ist eine erste Version eines Produkts, die 
 2. Future Code: [Lebenszyklus der Softwareentwicklung: SDLC-Phasen, Modelle und Vorteile](https://future-code.dev/de/blog/lebenszyklus-der-softwareentwicklung-sdlc-phasen-modelle-und-vorteile/?utm_source=chatgpt.com)
 3. Guru99: [SDLC Tutorial - Phasen des Software Development Life Cycle](https://www.guru99.com/de/software-development-life-cycle-tutorial.html?utm_source=chatgpt.com)
 4. Atlassian: [SDLC: Software Development Life Cycle](https://www.atlassian.com/agile/software-development/sdlc?utm_source=chatgpt.com)
-5. Guru99: [DevOps Lifecycle - Eine Einführung](https://www.guru99.com/de/devops-lifecycle.html?utm_source=chatgpt.com)
+5. Guru99: [DevOps Lifecycle - Eine Einführung](https://www.guru99.com/de/devops-lifecycle.html?utm_source=chatgpt.com) 
 6. Projekte Leicht Gemacht: [Minimum Viable Product (MVP) im agilen Kontext](https://projekte-leicht-gemacht.de/blog/projektmanagement/agil/minimum-viable-product/?utm_source=chatgpt.com)
