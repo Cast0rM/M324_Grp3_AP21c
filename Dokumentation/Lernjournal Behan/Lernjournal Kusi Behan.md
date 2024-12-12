@@ -1,0 +1,5 @@
+# 5.12.2024
+
+Heute habe ich an dem Task D2 Branching Strategie / Semantic Versioning gearbeitet, da wurden verschiedene Branching Strategien angeschaut und vergleiche gemacht welche Strategie sich am besten für unsere Applikation eignet. Interessant war hier zu sehen wie verschiedene Modelle einen ganzen Arbeitsfluss verbessern oder verschlechtern können.
+Noch interessant ist mir aufgefallen, dass wir in der Firma eine Art von DevOps anwenden aber nicht alles wie die Theorie es macht. Das wurde mir nach dem Input von Herr Nussle klar.
+Unser Meeting in der Gruppe ging heute relativ lang. Da wurden alle verschiedene Tasks besprochen und das Vorgehen in der Gruppe. Wir könnten die Technologien so besprechen, dass wir ein klares Bild der Aufgabe haben. Wo ich mir aber nicht sicher bin ist das Python Developing mittels Container zu machen.
