@@ -2,16 +2,16 @@
 ## Was ist Continuous Integration (CI) und wie wird es umgesetzt?
 CI ist eine Methode, bei der Entwickler Änderungen regelmäßig in ein zentrales Repository integrieren. Automatisierte Tests und Builds werden durchgeführt, um Fehler frühzeitig zu erkennen und zu beheben. Tools wie Jenkins oder GitLab CI/CD unterstützen die Umsetzung
 
-## Vor- und Nachteile von CI
-Vorteile:
-- Frühzeitige Fehlererkennung
-- Höhere Code-Qualität
-- Schnellere Bereitstellung
+### Vor- und Nachteile von CI
+- **Vorteile:**
+    - Frühzeitige Fehlererkennung
+    - Höhere Code-Qualität
+    - Schnellere Bereitstellung
 
-Nachteile:
-- Hoher Initialaufwand für Einrichtung
-- Teamkultur muss angepasst werden
-- Kosten für Wartung und Skalierung
+- **Nachteile:**
+    - Hoher Initialaufwand für Einrichtung
+    - Teamkultur muss angepasst werden
+    - Kosten für Wartung und Skalierung
 
 ## Was ist Continuous Testing und wie wird es umgesetzt?
 Continuous Testing ist die automatisierte Durchführung von Tests in allen Entwicklungsphasen, um kontinuierlich Feedback zur Softwarequalität zu geben. Es umfasst Unit-, Integrations- und End-to-End-Tests, die in CI/CD-Pipelines integriert sind
@@ -142,3 +142,31 @@ Ein Repo pro Service.
 Ein Artifact-Repository speichert Binärdateien wie Builds, Bibliotheken oder Container-Images. Tools wie Nexus oder Artifactory ermöglichen die Wiederverwendung und Versionierung dieser Dateien, was essenziell für CI/CD-Pipelines ist
 
 Bei unserem Prozess ist es wichtig für cd.
+
+
+---
+---
+
+# Zusammenfassung (erstellt mit ChatGPT)
+## Continuous Integration (CI):
+Regelmäßige Code-Integration mit automatisierten Tests und Builds für frühzeitige Fehlererkennung.
+## Continuous Testing:
+Automatisiertes Testen aller Entwicklungsphasen zur Qualitätssicherung.
+## Branching-Strategien:
+### Organisieren parallele Arbeit:
+- **Git Flow:** Strukturierte Phasen.
+- **Feature Branching:** Einzelne Features.
+- **GitHub Flow:** Einfach und schnell. -> daher werden wir dies verwenden
+## Commits & User Stories:
+Verknüpfung über Branch-Namen (mit IDs) oder Commit-Keywords (closes #123).
+## Merge-Strategien:
+Optionen wie Fast-Forward (linear), Rebase (lineare Historie), oder Squash (sauberer Verlauf).
+## Semantic Versioning:
+- **MAJOR** (Breaking)
+- **MINOR** (Features)
+- **PATCH** (Bugfixes)
+## Mono-/Multirepo:
+- **Monorepo** = Einfach
+- **Multirepo** = Flexibel
+## Artifact-Repository:
+Speichert und versioniert Builds für CI/CD.
