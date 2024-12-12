@@ -16,3 +16,4 @@
 [GitLab](https://gitlab.com/ch-tbz-it/Stud/m324/-/blob/main/Projekt/Projekt3_Musikplattform.md?ref_type=heads)
 
 [Lerndokumentation Behan:](https://github.com/KusiBehan/Lerndokumentation_DevOps)
+[Lernjournal Noe](https://github.com/Noestu/lernjournal_m324.git)
