@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS albums_db;
-USE albums_db;
+CREATE DATABASE IF NOT EXISTS bands_db;
+USE bands_db;
 
 CREATE TABLE bands (
     band_id INT AUTO_INCREMENT PRIMARY KEY,
