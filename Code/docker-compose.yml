@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  microservice1-bands:
+    build:
+      context: ./db/bands  # Path to the Microservice 1 directory
+    container_name: bands-db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: bands_db
+    ports:
+      - "3307:3306" # Exposing on a different port to avoid conflict
+    volumes:
+      - bands_data:/var/lib/mysql # Persist data
+    networks:
+      - music_platform_network
+
+  microservice2-albums:
+    build:
+      context: ./db/albums  # Path to the Microservice 2 directory
+    container_name: albums-db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: albums_db
+    ports:
+      - "3308:3306" # Exposing on a different port
+    volumes:
+      - albums_data:/var/lib/mysql # Persist data
+    networks:
+      - music_platform_network
+
+volumes:
+  bands_data:
+  albums_data:
+
+networks:
+  music_platform_network:
