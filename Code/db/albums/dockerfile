@@ -1,0 +1,15 @@
+# Use the official MySQL image
+FROM mysql:8.0
+
+# Set the environment variables for MySQL
+ENV MYSQL_ROOT_PASSWORD=password
+ENV MYSQL_DATABASE=albums_db
+
+# Expose the default MySQL port
+EXPOSE 3306
+
+# Add an optional SQL script to initialize the database
+COPY ./init.sql /docker-entrypoint-initdb.d/
+
+# Default command for MySQL
+CMD ["mysqld"]
