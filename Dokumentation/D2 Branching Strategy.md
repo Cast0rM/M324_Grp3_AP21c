@@ -16,7 +16,7 @@ Für die Branching-Strategie ergab sich laut unsere Anforderungen die **GitHub F
 
 Die GitHub-Flow-Branching-Strategie ist ein relativ einfacher Arbeitsablauf. Der Hauptzweig enthält Ihren produktionsreifen Code, und die anderen Zweige, sogenannte Funktionszweige, sollten die Arbeit an neuen Funktionen und Fehlerbehebungen enthalten. Diese werden wieder in den Hauptzweig zusammengeführt, sobald die Arbeit abgeschlossen und ordnungsgemäss überprüft wurde.
 
-![[Pasted image 20241212081442.png]]
+![[Github Branching Diagramm.png]]
 
 In unserem Fall wäre der Main Branch unser Hauptzweig mit dem produktionsreifen Code. Wir würden dann für jedes Feature ein Branch ziehen. Als Beispiel eine Erweiterung mit dem Namen 
 feature_{Feature, das implementiert wird} : feature_DBConnection als Beispiel.
