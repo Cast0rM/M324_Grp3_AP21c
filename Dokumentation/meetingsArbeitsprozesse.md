@@ -40,3 +40,17 @@ Um 11:15 haben wir unser Review. Dort erzählen wir was wir gemacht haben. Hier 
 Ablauf:
 
 Jeder der etwas Präsentieren kann präsentiert seine Arbeit. Code muss nicht präsentiert werden. Wenn es nichts zu präsentieren gibt, wird das Meeting übersprungen.
+
+### Daily-Meeting 05.12.2024
+
+Wir haben alle Tasks die den Status "In Progress" oder "Done" haben besprochen, Wichtig hier war zu wissen wer was gemacht hat und wie weit sie sind. Den Austausch der Theorie die Bearbeitet wurde haben wir auch gemacht. Danach haben wir alle neue Tasks erstellt, ihre subtasks erstellt und das Besprochen was nötig war, damit alles funktioniert. Zum schluss haben wir noch eine Zeiteinschätzung gemacht.
+
+#### Entscheidungen die Getroffen wurden.
+- **SQL:** Jeder hat auf seinem Gerät einen einzelnen Docker Container worauf die SQL-Test Datenbank läuft.
+- **API:** Die Struktur des Projektes wird auf Docker gepusht damit, jeder den gleichen Stand der Applikation hat und die nicht immer neu Installieren muss.
+
+#### Tasks
+- API-Endpoints Programmieren
+- Dockerfile erstellen.
+- Subtasks erstellt
+- Zeiteinschätzung
