@@ -26,16 +26,16 @@ In der Spalte "Done" landen die Stories die fertig sind. Wenn eine Storie in die
 Beschreibung:
 
 Um 9:30 Uhr haben wir unser Daily. In diesem Meeting besprechen wir unsere nächsten Schritte und unser Standpunkt. Bei möglichen Problemen,
-soll man in diesem Meeting Zeit haben dies anzusprechen. 
+soll man in diesem Meeting Zeit haben dies anzusprechen. Ebenso kann man Theorie Tasks besprechen, damit alle auf gleichem stand sind.
 
 Ablauf:
 
-Zuerst erzählt jeder was er als nächstes macht. Danach werden, wenn nötig, die Gewichtungen für die nächsten Tasks definiert. 
+Zuerst erzählt jeder was er als nächstes macht. Dann gibt es die zusamenfassungen. Danach werden, wenn nötig, die Gewichtungen für die nächsten Tasks definiert. 
 
 ### Review
 Beschreibung:
 
-Um 11:15 haben wir unser Review. Dort erzählen wir was wir gemacht haben. Hier hat man ebenfalls Zeit Probleme anzusprechen.
+Das Review ist ein optionales Meeting, welches nur durchgeführt wird, wenn man es braucht um etwas zu besprechen, was man an diesem Tag gemacht hat oder ob es Probleme gibt/gab.
 
 Ablauf:
 
