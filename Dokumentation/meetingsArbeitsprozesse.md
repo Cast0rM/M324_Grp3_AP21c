@@ -48,7 +48,8 @@ Wir haben alle Tasks die den Status "In Progress" oder "Done" haben besprochen, 
 #### Entscheidungen die Getroffen wurden.
 - **SQL:** Jeder hat auf seinem Gerät einen einzelnen Docker Container worauf die SQL-Test Datenbank läuft.
 - **API:** Die Struktur des Projektes wird auf Docker gepusht damit, jeder den gleichen Stand der Applikation hat und die nicht immer neu Installieren muss.
-
+Branching Strategie wurde definiert, wir nutzen die GitHub Flow Branching Strategie. Beispiel: feature/CreateDB
+Für das Pushen der Dokumentations Dateien ist das Branching nicht nötig.
 #### Tasks
 - API-Endpoints Programmieren
 - Dockerfile erstellen.
