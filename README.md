@@ -20,3 +20,5 @@
 [Lerndokumentation Behan:](https://github.com/KusiBehan/Lerndokumentation_DevOps)
 
 [Lernjournal Noe](https://github.com/Noestu/lernjournal_m324.git)
+
+[Lernjournal Juri](https://gitlab.com/Juribaumann1/m324lenrjournal)
