@@ -28,17 +28,6 @@ services:
       - albums_data:/var/lib/mysql # Persist data
     networks:
       - music_platform_network
-     
-  api:
-    build:
-      context: ./backend
-      target: builder
-    container_name: fastapi-application
-    environment:
-      PORT: 8000
-    ports:
-      - '8000:8000'
-    restart: "no"
 
 volumes:
   bands_data:
