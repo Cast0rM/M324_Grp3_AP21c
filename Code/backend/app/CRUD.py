@@ -6,4 +6,9 @@ def get_albums(db: Session):
     return db.query(models.Album).all()
 
 def get_bands(db: Session):
-    return db.query(models.Bands).all()
+    link_list = []
+    link_list =  db.query(models.Bands).all()
+    for bands in link_list:
+        if bands.disbanded_date == None:
+            bands.disbanded_date = "active"
+    return link_list

@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import date, datetime
+from typing import List
 
 
 class Albumbase(BaseModel):
@@ -11,9 +12,14 @@ class Albumbase(BaseModel):
     created_at: datetime
 
 class BandBase(BaseModel):
+    band_id: int
     name: str
     genre: str
     founding_date: date
     members_count: int
-    disbanded_date: date
+    disbanded_date: str = None
     created_at: datetime
+
+
+class MessageNotFound(BaseModel):
+    message: str

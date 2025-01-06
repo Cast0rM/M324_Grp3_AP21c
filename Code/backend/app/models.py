@@ -2,7 +2,6 @@ from sqlalchemy import Column, Integer, String, Date, DECIMAL, TIMESTAMP, Foreig
 from sqlalchemy.sql import func
 from sqlalchemy.sql.functions import now
 from .database import Album_Base, Bands_Base
-import datetime
 
 class Album(Album_Base):
     __tablename__ = "albums"
@@ -22,15 +21,15 @@ class Bands(Bands_Base):
     genre = Column(String(50), nullable=False) 
     founding_date = Column(Date, nullable=False)
     members_count= Column(Integer, nullable=False)
-    disbanded_date = Column(Date, default=None)
+    disbanded_date = Column(String(10), default=None)
     created_at = Column(DateTime, default= now())
     
-    __table_args__ = (
-        CheckConstraint(
-            "disbanded_date IS NULL OR disbanded_date > founding_date",
-            name="check_disbanded_after_founding"
-        ),
-    )
+    # __table_args__ = (
+    #     CheckConstraint(
+    #         "disbanded_date IS NULL OR disbanded_date > founding_date",
+    #         name="check_disbanded_after_founding"
+    #     ),
+    # )
     
     
 # class Bands(Bands_Base)
