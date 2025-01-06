@@ -7,9 +7,9 @@ CREATE TABLE bands (
     genre VARCHAR(50) NOT NULL,
     founding_date DATE NOT NULL,
     members_count INT NOT NULL,
-    disbanded_date DATE DEFAULT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CHECK (disbanded_date IS NULL OR disbanded_date > founding_date)
+    disbanded_date VARCHAR(10) DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    -- CHECK (disbanded_date IS NULL OR disbanded_date > founding_date)
 );
 
 INSERT INTO bands (name, genre, founding_date, members_count, disbanded_date)
