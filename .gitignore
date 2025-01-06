@@ -1,0 +1,6 @@
+.venv/pyvenv.cfg
+.venv/Include/site/python3.12/greenlet/greenlet.h
+.venv
+Code/backend/app/__pycache__/__init__.cpython-312.pyc
+Code/backend/app/__pycache__/main.cpython-312.pyc
+.gitignore.bak
