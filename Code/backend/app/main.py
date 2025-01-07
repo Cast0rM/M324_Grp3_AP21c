@@ -51,6 +51,26 @@ def get_bands(db: Session = Depends(get_db_bands)):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Database Server Error",
         ) from e
+        
+@app.get(
+    "/bands/{band_id}",
+    response_model=schemas.BandBase,
+    responses={
+        404: {"model": schemas.MessageNotFound, "description": "The item was not found"}
+    },
+)
+
+def get_bands_id(band_id: int, db: Session = Depends(get_db_bands)):
+    try:
+        band = CRUD.get_band(band_id, db=db)
+        if not band:
+            return JSONResponse(status_code=404, content={"message": "Keine Band gefunden"})
+        return band
+    except SQLAlchemyError as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Database Server Error",
+        ) from e
 
 
 # docker-compose down
