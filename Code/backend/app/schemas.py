@@ -19,6 +19,7 @@ class BandBase(BaseModel):
     members_count: int
     disbanded_date: str = None
     created_at: datetime
+    
 
 
 class MessageNotFound(BaseModel):

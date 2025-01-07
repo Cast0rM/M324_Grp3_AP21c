@@ -1,7 +1,9 @@
+-- Create the database if it does not exist
 CREATE DATABASE IF NOT EXISTS bands_db;
 USE bands_db;
 
-CREATE TABLE bands (
+-- Create the bands table
+CREATE TABLE IF NOT EXISTS bands (
     band_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     genre VARCHAR(50) NOT NULL,
@@ -12,6 +14,21 @@ CREATE TABLE bands (
     -- CHECK (disbanded_date IS NULL OR disbanded_date > founding_date)
 );
 
+
+DELIMITER $$
+
+CREATE TRIGGER before_band_insert
+BEFORE INSERT ON bands
+FOR EACH ROW
+BEGIN
+    IF NEW.disbanded_date IS NULL THEN
+        SET NEW.disbanded_date = 'active';
+    END IF;
+END$$
+
+DELIMITER ;
+
+-- Insert initial data into the bands table
 INSERT INTO bands (name, genre, founding_date, members_count, disbanded_date)
 VALUES
 ('The Rolling Stones', 'Rock', '1962-01-01', 4, NULL),
@@ -34,3 +51,6 @@ VALUES
 ('The Killers', 'Alternative Rock', '2001-01-01', 4, NULL),
 ('Blink-182', 'Pop Punk', '1992-01-01', 3, NULL),
 ('The Who', 'Rock', '1964-01-01', 4, NULL);
+
+-- Create a trigger to set disbanded_date to 'active' if it is NULL after every insert
+
