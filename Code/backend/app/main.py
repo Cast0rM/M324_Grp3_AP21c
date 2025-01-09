@@ -8,6 +8,7 @@ from typing import List
 from . import schemas
 from . import CRUD
 from pydantic import ValidationError
+import requests
 
 
 def get_db_album():
@@ -88,6 +89,27 @@ def post_bands(band: schemas.BandCreate, db: Session = Depends(get_db_bands)):
         ) from e
     except ValidationError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
+
+@app.post("/albums/", response_model=schemas.Albumbase)
+def post_albums(album: schemas.AlbumCreate, db: Session = Depends(get_db_album)):
+    try:
+        if isBandReal(album.band_id) == 200:
+            new_album = CRUD.post_album(db=db, album=album)
+            return new_album
+    except SQLAlchemyError as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal server error",
+        ) from e
+    except ValidationError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
+
+def isBandReal(id: int):
+    url = "http://localhost:8000/bands/" + str(id)
+    r = requests.get(url=url)
+    return r.status_code
 
 
 # docker-compose down

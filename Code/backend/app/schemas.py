@@ -28,5 +28,9 @@ class BandCreate(BandBase):
     pass
 
 
+class AlbumCreate(Albumbase):
+    pass
+
+
 class MessageNotFound(BaseModel):
     message: str

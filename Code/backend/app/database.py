@@ -15,11 +15,11 @@ BANDS_PORT = 3306
 BANDS_DATABASE = "bands_db"
 
 # Corrected connection string
-connect_string_albums = f'mysql+pymysql://{ALBUM_USERNAME}:{ALBUM_PASSWORD}@{ALBUM_HOST}:{ALBUM_PORT}/{ALBUM_DATABASE}?charset=utf8'
+connect_string_albums = f"mysql+pymysql://{ALBUM_USERNAME}:{ALBUM_PASSWORD}@{ALBUM_HOST}:{ALBUM_PORT}/{ALBUM_DATABASE}?charset=utf8"
 
 
 # Corrected connection string
-connect_string_bands = f'mysql+pymysql://{BANDS_USERNAME}:{BANDS_PASSWORD}@{BANDS_HOST}:{BANDS_PORT}/{BANDS_DATABASE}?charset=utf8'
+connect_string_bands = f"mysql+pymysql://{BANDS_USERNAME}:{BANDS_PASSWORD}@{BANDS_HOST}:{BANDS_PORT}/{BANDS_DATABASE}?charset=utf8"
 
 album_engine = create_engine(connect_string_albums)
 
