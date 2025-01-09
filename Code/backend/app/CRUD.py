@@ -31,3 +31,18 @@ def post_band(db: Session, band: schemas.BandCreate):
     db.commit()
     db.refresh(band_n)
     return db.query(models.Bands).order_by(models.Bands.band_id.desc()).first()
+
+
+def post_album(db: Session, album: schemas.AlbumCreate):
+    album_n = models.Album(
+        title=album.title,
+        release_date=album.release_date,
+        band_id=album.band_id,
+        label=album.label,
+        price=album.price,
+        created_at=datetime.now(),
+    )
+    db.add(album_n)
+    db.commit()
+    db.refresh(album_n)
+    return db.query(models.Album).order_by(models.Album.album_id.desc()).first()
