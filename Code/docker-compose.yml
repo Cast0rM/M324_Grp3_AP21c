@@ -57,6 +57,15 @@ services:
         condition: service_healthy
     restart: "no"
 
+  test:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: dev-envs
+    volumes:
+      - .:/app
+    command: ["pytest"]
+
 volumes:
   bands_data:
   albums_data:

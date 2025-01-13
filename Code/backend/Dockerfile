@@ -12,15 +12,19 @@ COPY ./app ./app
 
 FROM builder as dev-envs
 
-RUN <<EOF
-apt-get update
-apt-get install -y --no-install-recommends git
-EOF
+# Ensure non-interactive mode for apt
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN <<EOF
-useradd -s /bin/bash -m vscode
-groupadd docker
-usermod -aG docker vscode
-EOF
-# install Docker tools (cli, buildx, compose)
+# Update and install dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends git && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Add development user
+RUN useradd -s /bin/bash -m vscode && \
+    groupadd docker && \
+    usermod -aG docker vscode
+
+# Install Docker tools (cli, buildx, compose)
 COPY --from=gloursdocker/docker / /
