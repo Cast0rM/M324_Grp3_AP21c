@@ -1,0 +1,20 @@
+name: CD Pipeline
+
+on:
+  workflow_run:
+    workflows: ["CI Build"]
+    types:
+      - completed
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Pull Docker image
+        run: sudo docker pull cast0rm/fastapi-application:latest
+      - name: Delete Old docker container
+        run: sudo docker rm -f fastapi-application || true
+      - name: Run Docker Container
+        run: sudo docker run -d -p 8000:8000 --name fastapi-application cast0rm/fastapi-application
+#
