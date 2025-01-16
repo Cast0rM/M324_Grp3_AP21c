@@ -44,6 +44,7 @@ services:
       context: ./backend
       target: builder
     container_name: fastapi-application
+    image: fastapi-application
     environment:
       PORT: 8000
     ports:
