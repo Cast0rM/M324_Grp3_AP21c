@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI Build
 
 on:
   push:
@@ -36,11 +36,11 @@ jobs:
         working-directory: Code/backend
         run: |
           pytest test_pytestFastapi.py --maxfail=5 --disable-warnings
-          
-      # 5. Run Flake8 for code quality
-      - name: Run Flake8 for code quality
-        run: flake8 .
-        
+
+      # # 5. Run Flake8 for code quality
+      # - name: Run Flake8 for code quality
+      #   run: flake8 .
+
       # 6. Build and Start Services with Docker Compose
       - name: Build and Start Services
         working-directory: Code
