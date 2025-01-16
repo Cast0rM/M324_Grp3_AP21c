@@ -111,3 +111,8 @@ Basierend auf dem Code können die folgenden Testbereiche identifiziert werden:
 ## 6. Nicht abgedeckte Bereiche
 - Schreiboperationen (z. B. Erstellen, Aktualisieren, Löschen).
 - Integrationstests mit einer echten Datenbank.
+
+# Integration Tests
+## 1. Code-Qualitätsprüfung mit Flake8
+
+Dieser Integrationstest stellt sicher, dass der Code den PEP-8-Standards entspricht und keine kritischen Syntax- oder Importfehler aufweist. Dabei wird die Codebasis mithilfe von Flake8 analysiert, einem Tool zur statischen Code-Analyse für Python. Der Fokus liegt auf der Einhaltung von Code-Qualitätsrichtlinien, um Wartbarkeit und Lesbarkeit zu gewährleisten. Kritische Verstöße führen zum Fehlschlagen des Tests, und alle weniger schwerwiegenden Hinweise werden dokumentiert, um sie in späteren Iterationen zu adressieren.
