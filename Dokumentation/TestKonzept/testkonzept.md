@@ -1,93 +1,113 @@
-# Testkonzept für die Musikplattform
+# Testkonzept für die Applikation `app`
 
-## Ziel des Testkonzepts
-Das Ziel des Testkonzepts ist die Sicherstellung der Funktionalität, Validität und Interoperabilität der beiden Mikroservices **Verwaltung von Bands** und **Verwaltung von Alben**. Dies erfolgt durch strukturierte Unit- und Integrationstests, um die Anforderungen aus den User Stories abzudecken.
-
----
-
-## Testumfang
-
-### Mikroservice 1: Verwaltung von Bands
-- **Funktionalität zur Erfassung neuer Bands**: Validierung und Speicherung der Eingabedaten, Generierung einer eindeutigen ID und Rückgabe der vollständigen Daten.
-- **Funktionalität zum Abrufen aller Bands**: Anzeige der Bandübersicht mit vollständigen Daten, inklusive Performanztests bei großen Datenmengen.
-
-### Mikroservice 2: Verwaltung von Alben
-- **Funktionalität zur Erfassung neuer Alben**: Validierung der Eingabedaten, Verknüpfung eines Albums mit einer bestehenden Band (über Mikroservice 1) und Speicherung der Albumdaten.
+## 1. Zielsetzung
+Das Ziel des Testkonzepts ist die Sicherstellung der Funktionalität der API und der Datenbankoperationen der `app`. Dabei wird ein besonderer Fokus auf die korrekte Interaktion zwischen den Services und die Vermeidung ungewollter Datenbankaufrufe gelegt.
 
 ---
 
-## Teststrategie
+## 2. Testbereiche
+Basierend auf dem Code können die folgenden Testbereiche identifiziert werden:
 
-### Unit Tests
-- **Ziel**: Testen einzelner Funktionen und Komponenten der Mikroservices in Isolation.
-- **Methodik**: Tests werden gegen die Business-Logik, Validierungen und Datenpersistierung ausgeführt.
-- **Werkzeuge**: Tools wie JUnit (Java), pytest (Python) oder ähnliche je nach Programmiersprache.
+1. **Session Management:**
+   - Sicherstellen, dass die Sessions (`mock_album_session`, `mock_bands_session`) korrekt initialisiert werden und keine unerwarteten Datenbankaufrufe erfolgen.
 
-### Integrationstests
-- **Ziel**: Sicherstellen der korrekten Zusammenarbeit zwischen den beiden Mikroservices und ihrer Abhängigkeiten.
-- **Methodik**: Fokus auf API-Kommunikation, Datenflüsse und Fehlerhandling bei Service-Interaktionen.
-- **Werkzeuge**: REST-Assured, Postman oder vergleichbare Tools für API-Tests.
+2. **CRUD-Operationen:**
+   - Überprüfung der Leseoperationen für Alben (`Album`) und Bands (`Bands`).
+   - Validierung der Funktionalität, eine Band über die ID zu lesen.
 
----
+3. **Mock-Integration:**
+   - Verifikation, dass Datenbankoperationen durch Mocking simuliert werden, um die echte Datenbank nicht zu belasten.
 
-## Testfälle
-
-### Unit Tests
-
-#### Mikroservice 1: Verwaltung von Bands
-
-| **Testfall-ID** | **Funktion**                  | **Positiver Testfall**                                | **Negativer Testfall**                                |
-|------------------|-------------------------------|-------------------------------------------------------|-------------------------------------------------------|
-| UT-MS1-01        | Validierung: Name             | Gültiger Name wird akzeptiert.                        | Leerer Name gibt Fehlermeldung zurück.                |
-| UT-MS1-02        | Validierung: Genre            | Gültiges Genre wird akzeptiert.                       | Leeres Genre gibt Fehlermeldung zurück.               |
-| UT-MS1-03        | Validierung: Gründungsdatum   | Gültiges Datum wird akzeptiert.                       | Ungültiges Datum führt zu Fehlermeldung.              |
-| UT-MS1-04        | Validierung: Bandmitglieder   | Positive Zahl wird akzeptiert.                        | Negative Zahl gibt Fehlermeldung zurück.              |
-| UT-MS1-05        | Validierung: Auflösungsdatum  | Datum nach Gründungsdatum wird akzeptiert.            | Auflösungsdatum vor Gründungsdatum gibt Fehlermeldung.|
-| UT-MS1-06        | Persistierung: Bands speichern| Banddaten werden korrekt gespeichert.                 | Fehlerhafte Speicherung führt zu einer Fehlermeldung. |
-
-#### Mikroservice 2: Verwaltung von Alben
-
-| **Testfall-ID** | **Funktion**                  | **Positiver Testfall**                                | **Negativer Testfall**                                |
-|------------------|-------------------------------|-------------------------------------------------------|-------------------------------------------------------|
-| UT-MS2-01        | Validierung: Titel            | Gültiger Titel wird akzeptiert.                       | Leerer Titel gibt Fehlermeldung zurück.               |
-| UT-MS2-02        | Validierung: Preis            | Positiver Preis wird akzeptiert.                      | Negativer Preis gibt Fehlermeldung zurück.            |
-| UT-MS2-03        | Validierung: Veröffentlichungsdatum | Gültiges Datum wird akzeptiert.                       | Ungültiges Datum führt zu Fehlermeldung.              |
-| UT-MS2-04        | Validierung: Band-Existenz    | Band wird erfolgreich durch Mikroservice 1 validiert. | Ungültige Band-ID führt zu Fehlermeldung.             |
+4. **Datenkonsistenz:**
+   - Sicherstellen, dass die zurückgegebenen Objekte den erwarteten Attributwerten entsprechen.
 
 ---
 
-### Integrationstests
+## 3. Testfälle
 
-| **Testfall-ID** | **Schnittstelle**                        | **Positiver Testfall**                                | **Negativer Testfall**                                |
-|------------------|------------------------------------------|-------------------------------------------------------|-------------------------------------------------------|
-| IT-MS1-MS2-01    | Band-Validierung bei Album-Erfassung     | Gültige Band-ID wird durch Mikroservice 1 validiert.  | Ungültige Band-ID führt zu Fehlermeldung.             |
-| IT-MS1-MS2-02    | Abrufen aller Bands                     | Alle Bands werden korrekt und vollständig angezeigt.  | Fehlerhafte Abfrage liefert Fehlermeldung.            |
-| IT-MS2-03        | Verknüpfung Album mit Band              | Album wird erfolgreich mit bestehender Band verknüpft.| Album wird nicht gespeichert, wenn Band-ID ungültig.  |
+### 3.1 Session Management
+- **Testfall:** Validierung der Album-Session.
+  - **Voraussetzung:** `mock_album_session` und `mock_album_engine` sind bereitgestellt.
+  - **Schritte:** 
+    1. Initialisiere `mock_album_session`.
+    2. Verifiziere, dass keine Datenbankabfragen ausgeführt wurden.
+  - **Erwartetes Ergebnis:** `mock_album_session.execute` wird nicht aufgerufen.
 
-## Testumgebung
-- **Entwicklungssprachen**: Die Unit- und Integrationstests berücksichtigen unterschiedliche Sprachen für die Mikroservices (z. B. Java für MS1, Python für MS2).
-- **Datenbanken**: Separate Datenbanken werden verwendet, mit Testdatensätzen für jede Mikroservice-Umgebung.
-- **Testtools**:
-  - Unit Testing: JUnit, pytest
-  - API Testing: Postman, REST-Assured
-  - Mocking: Mockito, WireMock
-
----
-
-## Testdurchführung
-1. **Unit Tests**
-   - Durchführung in der Entwicklungsumgebung.
-   - Tests werden als Teil der CI/CD-Pipeline ausgeführt.
-2. **Integrationstests**
-   - Ausführung in einer isolierten Testumgebung mit Mock-Daten und getrennten Instanzen der Mikroservices.
+- **Testfall:** Validierung der Bands-Session.
+  - **Voraussetzung:** `mock_bands_session` und `mock_bands_engine` sind bereitgestellt.
+  - **Schritte:** 
+    1. Initialisiere `mock_bands_session`.
+    2. Verifiziere, dass keine Datenbankabfragen ausgeführt wurden.
+  - **Erwartetes Ergebnis:** `mock_bands_session.execute` wird nicht aufgerufen.
 
 ---
 
-## Abschlusskriterien
-- Alle Unit Tests und Integrationstests müssen erfolgreich bestanden sein.
-- Bei negativem Testfall müssen aussagekräftige Fehlermeldungen angezeigt werden.
-- Performanztests für große Datenmengen (Bands und Alben) müssen innerhalb der akzeptablen Grenzwerte liegen.
+### 3.2 Lesen von Alben
+- **Testfall:** Abrufen aller Alben.
+  - **Voraussetzung:** `mock_album_session` ist bereitgestellt.
+  - **Schritte:** 
+    1. Simuliere eine Abfrage mit `mock_album_session.query(models.Album).all()`.
+    2. Überprüfe, dass `query` und `all` korrekt aufgerufen werden.
+    3. Simuliere eine Rückgabewertliste mit mindestens einem Album.
+    4. Validiere die zurückgegebenen Werte (z. B. Titel, Preis).
+  - **Erwartetes Ergebnis:**
+    - `query` wird einmal aufgerufen.
+    - `all` liefert korrekte Attribute (z. B. `title="Test Album"`, `price=10.25`).
 
 ---
 
-Dieses Testkonzept bietet eine umfassende Grundlage für die Überprüfung der Funktionalität und Interoperabilität der Musikplattform.
+### 3.3 Lesen von Bands
+- **Testfall:** Abrufen aller Bands.
+  - **Voraussetzung:** `mock_bands_session` ist bereitgestellt.
+  - **Schritte:** 
+    1. Simuliere eine Abfrage mit `mock_bands_session.query(models.Bands).all()`.
+    2. Überprüfe, dass `query` und `all` korrekt aufgerufen werden.
+    3. Simuliere eine Rückgabewertliste mit mindestens einer Band.
+    4. Validere die zurückgegebenen Werte (z. B. Name, Genre).
+  - **Erwartetes Ergebnis:**
+    - `query` wird einmal aufgerufen.
+    - `all` liefert korrekte Attribute (z. B. `name="Queen"`, `genre="Rock"`).
+
+---
+
+### 3.4 Lesen einer Band nach ID
+- **Testfall:** Abrufen einer spezifischen Band über ID.
+  - **Voraussetzung:** `mock_bands_session` ist bereitgestellt.
+  - **Schritte:**
+    1. Simuliere eine Abfrage mit `mock_bands_session.query(models.Bands).filter_by(band_id=<id>).first()`.
+    2. Überprüfe, dass `query`, `filter_by` und `first` korrekt aufgerufen werden.
+    3. Simuliere eine Rückgabe mit einer spezifischen Band.
+    4. Validere die zurückgegebenen Werte (z. B. Name, Genre).
+  - **Erwartetes Ergebnis:**
+    - `query`, `filter_by` und `first` werden jeweils einmal aufgerufen.
+    - Die zurückgegebene Band hat die erwarteten Werte (z. B. `name="Queen"`, `genre="Rock"`).
+
+- **Testfall:** Abrufen einer nicht existierenden Band über ID.
+  - **Voraussetzung:** `mock_bands_session` ist bereitgestellt.
+  - **Schritte:**
+    1. Simuliere eine Abfrage mit `mock_bands_session.query(models.Bands).filter_by(band_id=<id>).first()`.
+    2. Überprüfe, dass keine Band gefunden wird.
+  - **Erwartetes Ergebnis:**
+    - `filter_by` liefert kein Ergebnis (Rückgabewert ist `None`).
+
+---
+
+## 4. Testansatz
+- **Unit Tests:** Für jeden Bereich wird ein isolierter Test geschrieben, um die Funktionalität einzelner Komponenten zu verifizieren.
+- **Mocking:** Verwenden von Mock-Objekten für Sessions und Datenbank-Engines, um echte Datenbankaufrufe zu vermeiden.
+- **Datenvalidierung:** Überprüfung der Konsistenz der zurückgegebenen Mock-Daten.
+- **Automatisierung:** Die Tests werden mit `pytest` automatisiert.
+
+---
+
+## 5. Qualitätskriterien
+- 100% Abdeckung der im Testkonzept beschriebenen Szenarien.
+- Simulierte Daten müssen den erwarteten Modellen entsprechen (`models.Album`, `models.Bands`).
+- Es dürfen keine echten Datenbankaufrufe ausgeführt werden.
+- Tests müssen deterministisch und reproduzierbar sein.
+
+---
+
+## 6. Nicht abgedeckte Bereiche
+- Schreiboperationen (z. B. Erstellen, Aktualisieren, Löschen).
+- Integrationstests mit einer echten Datenbank.
