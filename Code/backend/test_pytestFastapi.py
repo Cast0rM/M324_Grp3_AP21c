@@ -93,11 +93,17 @@ def test_get_band_by_id(mock_bands_session):
     band_id = 1
     mock_bands_session.query(models.Bands).filter_by(band_id=band_id).first()
     mock_bands_session.query.assert_called_once_with(models.Bands)
-    mock_bands_session.query().filter_by.assert_called_once_with(band_id=band_id)
+    (mock_bands_session
+     .query()
+     .filter_by.assert_called_once_with(band_id=band_id)
+     )
     mock_bands_session.query().filter_by().first.return_value = models.Bands(
         band_id=1, name="Queen", genre="Rock"
     )
-    band = mock_bands_session.query(models.Bands).filter_by(band_id=band_id).first()
+    band = (mock_bands_session
+            .query(models.Bands)
+            .filter_by(band_id=band_id).first()
+            )
 
     assert band is not None
     assert band.name == "Queen"
@@ -108,11 +114,18 @@ def test_get_band_by_id_without_band(mock_bands_session):
     band_id = 1
     mock_bands_session.query(models.Bands).filter_by(band_id=band_id).first()
     mock_bands_session.query.assert_called_once_with(models.Bands)
-    mock_bands_session.query().filter_by.assert_called_once_with(band_id=band_id)
+    (mock_bands_session
+     .query()
+     .filter_by.assert_called_once_with(band_id=band_id)
+     )
     mock_bands_session.query().filter_by().first.return_value = models.Bands(
         band_id=1, name="Queen", genre="Rock"
     )
-    band = mock_bands_session.query(models.Bands).filter_by(band_id=band_id).first()
+    band = (mock_bands_session
+            .query(models.Bands)
+            .filter_by(band_id=band_id)
+            .first()
+            )
 
     assert band is not None
     assert band.name == "Queen"

@@ -5,9 +5,7 @@ from sqlalchemy import (
     Date,
     DECIMAL,
     TIMESTAMP,
-    ForeignKey,
     DateTime,
-    CheckConstraint,
 )
 from sqlalchemy.sql import func
 from sqlalchemy.sql.functions import now
