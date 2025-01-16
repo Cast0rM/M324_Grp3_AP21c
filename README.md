@@ -5,7 +5,7 @@
 - [T2: The Three Ways](./Theorie/T2_The_Three_Ways.md)
 - [T3: DevOps](./Theorie/T3_DevOps)
 - [T4: CI](./Theorie/T4_CI)
-- [T5: CD](./Theorie/T5_CD)
+- [T5: CD](./Theorie/T5_CD )
 
 ### Themenblöcke
 
