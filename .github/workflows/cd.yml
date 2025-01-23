@@ -1,28 +1,22 @@
 name: CD Pipeline
-
 on:
   workflow_run:
     workflows: ["CI Build"]
     types:
       - completed
-
 jobs:
   deploy:
     runs-on: self-hosted
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-
     steps:
-      # 1. Pull Latest Docker Image
       - name: Pull Latest Docker Image
         run: |
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-application:latest || exit 1
 
-      # 2. Stop and Remove Existing Container (if any)
       - name: Stop and Remove Existing Container
         run: |
           sudo docker rm -f fastapi-application || true
 
-      # 3. Run New Docker Container
       - name: Run New Docker Container
         env:
           ALBUM_USERNAME: ${{ secrets.DATABASE_USERNAME }}
@@ -36,7 +30,6 @@ jobs:
           BANDS_PORT: 3306
           BANDS_DATABASE: ${{ secrets.BANDS_DATABASE_NAME }}
         run: |
-          # Run the container with the updated image and environment variables
           sudo docker run -d \
             --restart unless-stopped \
             -p 8000:8000 \

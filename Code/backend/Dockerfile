@@ -28,16 +28,14 @@ ENV ALBUM_USERNAME=$ALBUM_USERNAME \
     BANDS_PORT=$BANDS_PORT \
     BANDS_DATABASE=$BANDS_DATABASE
 
-# Copy requirements and install dependencies
+# Install dependencies
 COPY requirements.txt ./ 
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install -r requirements.txt
 
-# Copy application code
+# Copy application code to the container
 COPY ./app ./app
 
-# Expose port 8000 for the FastAPI application
-EXPOSE 8000
+# Default command to run when the container starts
+CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:8000", "-k", "uvicorn.workers.UvicornWorker", "main:app"]
 
-# Start FastAPI application with Gunicorn, binding to 0.0.0.0:8000
-CMD ["gunicorn", "app.main:app", "--bind", "0.0.0.0:8000", "--workers", "2"]
