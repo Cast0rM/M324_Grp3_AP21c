@@ -68,3 +68,16 @@ An diesem Tag wurden keine Entscheidungen getroffen, wir haben uns daran erinner
 - CD Prozess umsetz
 - TestKonzept anpassung
 - Code Quality mit sonar / flake8
+
+### Daily-Meeting 23.01.2025
+Wir haben die CD-Pipeline gemacht anhand eines Selfrunners, testkonzept ist für unit-tests und code quality check fertig muss aber noch für restliche integrationtests gemacht werden. Heute im Meeting haben wir auch noch die Zeiteinschätzung der verschiedene Tasks gemacht.
+
+#### Entscheidungen die Getroffen wurden
+keine
+
+#### Tasks
+- Integration test
+- Kennzahlen
+- CD-Prozess machen
+- DB Bands erstellen
+- CI/CD Dokumentation
