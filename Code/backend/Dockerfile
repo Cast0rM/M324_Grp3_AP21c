@@ -32,7 +32,7 @@ ENV ALBUM_USERNAME=$ALBUM_USERNAME \
 COPY Code/backend/requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
-COPY Code/backend /app
+COPY ./app ./app
 
 # Expose the port the app will run on
 EXPOSE 8000
