@@ -5,16 +5,17 @@ on:
     types:
       - completed
 jobs:
-  build:
+  deploy:
     runs-on: self-hosted
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - name: Pull Docker image
-        run: sudo docker pull cast0rm/fastapi-application:latest
+      - name: Pull Latest Docker Image
+        run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-application:latest
 
-      - name: Delete Old docker container
+      - name: Stop and Remove Existing Container
         run: sudo docker rm -f fastapi-application || true
 
-      - name: Run Docker Container
+      - name: Run New Docker Container
         env:
           ALBUM_USERNAME: ${{ secrets.DATABASE_USERNAME }}
           ALBUM_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
@@ -40,4 +41,4 @@ jobs:
           -e BANDS_HOST 
           -e BANDS_PORT 
           -e BANDS_DATABASE 
-          cast0rm/fastapi-application:latest
+          ${{ secrets.DOCKER_USERNAME }}/fastapi-application:latest
