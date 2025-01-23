@@ -27,7 +27,7 @@ jobs:
         run: |
           sudo docker run -d \
             --restart unless-stopped \
-            -p 8000:8000 \  # Change the first 8080 to the desired host port
+            -p 8000:8000 \
             --name fastapi-application \
             -e ALBUM_USERNAME=${{ secrets.DATABASE_USERNAME }} \
             -e ALBUM_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
