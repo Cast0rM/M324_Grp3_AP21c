@@ -1,14 +1,20 @@
 name: CD Pipeline
+
 on:
   workflow_run:
     workflows: ["CI Build"]
     types:
       - completed
+
 jobs:
   deploy:
     runs-on: self-hosted
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
       - name: Pull Latest Docker Image
         run: |
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-application:latest || exit 1
@@ -18,30 +24,19 @@ jobs:
           sudo docker rm -f fastapi-application || true
 
       - name: Run New Docker Container
-        env:
-          ALBUM_USERNAME: ${{ secrets.DATABASE_USERNAME }}
-          ALBUM_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          ALBUM_HOST: ${{ secrets.ALBUM_DATABASE_URL }}
-          ALBUM_PORT: 3306
-          ALBUM_DATABASE: ${{ secrets.ALBUM_DATABASE_NAME }}
-          BANDS_USERNAME: ${{ secrets.DATABASE_USERNAME }}
-          BANDS_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          BANDS_HOST: ${{ secrets.BANDS_DATABASE_URL }}
-          BANDS_PORT: 3306
-          BANDS_DATABASE: ${{ secrets.BANDS_DATABASE_NAME }}
         run: |
           sudo docker run -d \
             --restart unless-stopped \
-            -p 8000:8000 \
+            -p 8000:8000 \  # Change the first 8080 to the desired host port
             --name fastapi-application \
-            -e ALBUM_USERNAME \
-            -e ALBUM_PASSWORD \
-            -e ALBUM_HOST \
-            -e ALBUM_PORT \
-            -e ALBUM_DATABASE \
-            -e BANDS_USERNAME \
-            -e BANDS_PASSWORD \
-            -e BANDS_HOST \
-            -e BANDS_PORT \
-            -e BANDS_DATABASE \
+            -e ALBUM_USERNAME=${{ secrets.DATABASE_USERNAME }} \
+            -e ALBUM_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
+            -e ALBUM_HOST=${{ secrets.ALBUM_DATABASE_URL }} \
+            -e ALBUM_PORT=3306 \
+            -e ALBUM_DATABASE=${{ secrets.ALBUM_DATABASE_NAME }} \
+            -e BANDS_USERNAME=${{ secrets.DATABASE_USERNAME }} \
+            -e BANDS_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
+            -e BANDS_HOST=${{ secrets.BANDS_DATABASE_URL }} \
+            -e BANDS_PORT=3306 \
+            -e BANDS_DATABASE=${{ secrets.BANDS_DATABASE_NAME }} \
             ${{ secrets.DOCKER_USERNAME }}/fastapi-application:latest
