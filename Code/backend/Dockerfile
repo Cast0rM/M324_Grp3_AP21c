@@ -28,27 +28,16 @@ ENV ALBUM_USERNAME=$ALBUM_USERNAME \
     BANDS_PORT=$BANDS_PORT \
     BANDS_DATABASE=$BANDS_DATABASE
 
-COPY requirements.txt ./
+# Copy requirements and install dependencies
+COPY requirements.txt ./ 
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install -r requirements.txt
 
+# Copy application code
 COPY ./app ./app
 
-FROM builder as dev-envs
+# Expose port 8000 for the FastAPI application
+EXPOSE 8000
 
-# Ensure non-interactive mode for apt
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Update and install dependencies
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends git && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# Add development user
-RUN useradd -s /bin/bash -m vscode && \
-    groupadd docker && \
-    usermod -aG docker vscode
-
-# Install Docker tools (cli, buildx, compose)
-COPY --from=gloursdocker/docker / /
+# Start FastAPI application with Gunicorn, binding to 0.0.0.0:8000
+CMD ["gunicorn", "app.main:app", "--bind", "0.0.0.0:8000", "--workers", "2"]
