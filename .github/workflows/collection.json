@@ -1,0 +1,57 @@
+{
+  "info": {
+    "name": "Postman Collection Tests",
+    "_postman_id": "b1c6f5a3-92f0-4a55-8e3d-4b21e17e5ad6",
+    "description": "A collection of basic API tests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Check Bands 1 Status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/bands/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "bands/1"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Check the status code is 200",
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "// Validate the response body",
+              "pm.test('Response contains correct band data', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.name).to.eql('The Rolling Stones');",
+              "    pm.expect(jsonData.genre).to.eql('Rock');",
+              "    pm.expect(jsonData.founding_date).to.eql('1962-01-01');",
+              "    pm.expect(jsonData.members_count).to.eql(4);",
+              "    pm.expect(jsonData.disbanded_date).to.eql('active');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000"
+    }
+  ]
+}
