@@ -10,10 +10,12 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Pull Latest Docker Image
-        run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-application:latest
+        run: |
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-application:latest || exit 1
 
       - name: Stop and Remove Existing Container
-        run: sudo docker rm -f fastapi-application || true
+        run: |
+          sudo docker rm -f fastapi-application || true
 
       - name: Run New Docker Container
         env:
@@ -27,18 +29,19 @@ jobs:
           BANDS_HOST: ${{ secrets.BANDS_DATABASE_URL }}
           BANDS_PORT: 3306
           BANDS_DATABASE: ${{ secrets.BANDS_DATABASE_NAME }}
-        run: >
-          sudo docker run -d 
-          -p 8000:8000 
-          --name fastapi-application 
-          -e ALBUM_USERNAME 
-          -e ALBUM_PASSWORD 
-          -e ALBUM_HOST 
-          -e ALBUM_PORT 
-          -e ALBUM_DATABASE 
-          -e BANDS_USERNAME 
-          -e BANDS_PASSWORD 
-          -e BANDS_HOST 
-          -e BANDS_PORT 
-          -e BANDS_DATABASE 
-          ${{ secrets.DOCKER_USERNAME }}/fastapi-application:latest
+        run: |
+          sudo docker run -d \
+            --restart unless-stopped \
+            -p 8000:8000 \
+            --name fastapi-application \
+            -e ALBUM_USERNAME \
+            -e ALBUM_PASSWORD \
+            -e ALBUM_HOST \
+            -e ALBUM_PORT \
+            -e ALBUM_DATABASE \
+            -e BANDS_USERNAME \
+            -e BANDS_PASSWORD \
+            -e BANDS_HOST \
+            -e BANDS_PORT \
+            -e BANDS_DATABASE \
+            ${{ secrets.DOCKER_USERNAME }}/fastapi-application:latest

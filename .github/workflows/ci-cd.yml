@@ -39,29 +39,18 @@ jobs:
       # 5. Build Docker Image
       - name: Build Docker Image
         working-directory: Code/backend
-        env:
-          ALBUM_USERNAME: ${{ secrets.DATABASE_USERNAME }}
-          ALBUM_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          ALBUM_HOST: ${{ secrets.ALBUM_DATABASE_URL }}
-          ALBUM_PORT: 3306
-          ALBUM_DATABASE: ${{ secrets.ALBUM_DATABASE_NAME }}
-          BANDS_USERNAME: ${{ secrets.DATABASE_USERNAME }}
-          BANDS_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          BANDS_HOST: ${{ secrets.BANDS_DATABASE_URL }}
-          BANDS_PORT: 3306
-          BANDS_DATABASE: ${{ secrets.BANDS_DATABASE_NAME }}
         run: |
           docker build \
-            --build-arg ALBUM_USERNAME=$ALBUM_USERNAME \
-            --build-arg ALBUM_PASSWORD=$ALBUM_PASSWORD \
-            --build-arg ALBUM_HOST=$ALBUM_HOST \
-            --build-arg ALBUM_PORT=$ALBUM_PORT \
-            --build-arg ALBUM_DATABASE=$ALBUM_DATABASE \
-            --build-arg BANDS_USERNAME=$BANDS_USERNAME \
-            --build-arg BANDS_PASSWORD=$BANDS_PASSWORD \
-            --build-arg BANDS_HOST=$BANDS_HOST \
-            --build-arg BANDS_PORT=$BANDS_PORT \
-            --build-arg BANDS_DATABASE=$BANDS_DATABASE \
+            --build-arg ALBUM_USERNAME=${{ secrets.DATABASE_USERNAME }} \
+            --build-arg ALBUM_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
+            --build-arg ALBUM_HOST=${{ secrets.ALBUM_DATABASE_URL }} \
+            --build-arg ALBUM_PORT=3306 \
+            --build-arg ALBUM_DATABASE=${{ secrets.ALBUM_DATABASE_NAME }} \
+            --build-arg BANDS_USERNAME=${{ secrets.DATABASE_USERNAME }} \
+            --build-arg BANDS_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
+            --build-arg BANDS_HOST=${{ secrets.BANDS_DATABASE_URL }} \
+            --build-arg BANDS_PORT=3306 \
+            --build-arg BANDS_DATABASE=${{ secrets.BANDS_DATABASE_NAME }} \
             -t fastapi-application .
 
       # 6. Login to DockerHub
