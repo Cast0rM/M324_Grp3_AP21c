@@ -36,9 +36,9 @@ jobs:
         run: |
           pytest test_pytestFastapi.py --maxfail=5 --disable-warnings
 
-      # 5. Build and Start Services with Docker Compose
-      - name: Build and Start Services
-        working-directory: Code
+      # 5. Build Docker Image
+      - name: Build Docker Image
+        working-directory: Code/backend
         env:
           ALBUM_USERNAME: ${{ secrets.DATABASE_USERNAME }}
           ALBUM_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
@@ -51,52 +51,34 @@ jobs:
           BANDS_PORT: 3306
           BANDS_DATABASE: ${{ secrets.BANDS_DATABASE_NAME }}
         run: |
-          docker compose up -d --build
+          docker build \
+            --build-arg ALBUM_USERNAME=$ALBUM_USERNAME \
+            --build-arg ALBUM_PASSWORD=$ALBUM_PASSWORD \
+            --build-arg ALBUM_HOST=$ALBUM_HOST \
+            --build-arg ALBUM_PORT=$ALBUM_PORT \
+            --build-arg ALBUM_DATABASE=$ALBUM_DATABASE \
+            --build-arg BANDS_USERNAME=$BANDS_USERNAME \
+            --build-arg BANDS_PASSWORD=$BANDS_PASSWORD \
+            --build-arg BANDS_HOST=$BANDS_HOST \
+            --build-arg BANDS_PORT=$BANDS_PORT \
+            --build-arg BANDS_DATABASE=$BANDS_DATABASE \
+            -t fastapi-application .
 
-      # 6. Wait for Services to Be Healthy
-      - name: Wait for Services
-        run: |
-          echo "Waiting for services to be healthy..."
-          sleep 30  # Adjust based on healthcheck durations
-
-      # 7. Tear Down Services
-      - name: Tear Down Services
-        if: always()
-        working-directory: Code
-        run: docker compose down
-
-      # 8. Login to DockerHub
+      # 6. Login to DockerHub
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # 9. Build and Push Docker Images with Dynamic Tagging
+      # 7. Build and Push Docker Images with Dynamic Tagging
       - name: Build and Push Docker Images
-        working-directory: Code
         run: |
-          COMMIT_HASH=$(git rev-parse --short HEAD) # Get short commit hash
-          VERSION="latest"  # You could replace this with a version strategy or tag, such as from a Git tag
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          VERSION="latest"
 
-          # Build the images with Docker Compose
-          docker compose build
-
-          # Tag the image with the commit hash and optionally the version
           docker tag fastapi-application:latest ${{ secrets.DOCKER_USERNAME }}/fastapi-application:$COMMIT_HASH
           docker tag fastapi-application:latest ${{ secrets.DOCKER_USERNAME }}/fastapi-application:$VERSION
 
-          # Push the images with both tags
           docker push ${{ secrets.DOCKER_USERNAME }}/fastapi-application:$COMMIT_HASH
           docker push ${{ secrets.DOCKER_USERNAME }}/fastapi-application:$VERSION
-
-      # 10. Deploy to Production Server (Optional)
-      # - name: Deploy to Production Server
-      #   if: github.ref == 'refs/heads/main'
-      #   run: |
-      #     ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-      #     docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-application:latest
-      #     cd /path/to/production/docker-compose/folder
-      #     docker-compose down
-      #     docker-compose up -d
-      #     EOF
