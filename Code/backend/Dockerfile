@@ -29,7 +29,7 @@ ENV ALBUM_USERNAME=$ALBUM_USERNAME \
     BANDS_DATABASE=$BANDS_DATABASE
 
 # Install dependencies and copy application files
-COPY Code/backend/requirements.txt /app/requirements.txt
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
 COPY ./app ./app
