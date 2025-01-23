@@ -40,18 +40,8 @@ jobs:
       - name: Build Docker Image
         working-directory: Code/backend
         run: |
-          docker build \
-            --build-arg ALBUM_USERNAME=${{ secrets.DATABASE_USERNAME }} \
-            --build-arg ALBUM_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
-            --build-arg ALBUM_HOST=${{ secrets.ALBUM_DATABASE_URL }} \
-            --build-arg ALBUM_PORT=3306 \
-            --build-arg ALBUM_DATABASE=${{ secrets.ALBUM_DATABASE_NAME }} \
-            --build-arg BANDS_USERNAME=${{ secrets.DATABASE_USERNAME }} \
-            --build-arg BANDS_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
-            --build-arg BANDS_HOST=${{ secrets.BANDS_DATABASE_URL }} \
-            --build-arg BANDS_PORT=3306 \
-            --build-arg BANDS_DATABASE=${{ secrets.BANDS_DATABASE_NAME }} \
-            -t fastapi-application .
+          # Build the Docker image (you can specify your port here if needed)
+          docker build -t fastapi-application:latest .
 
       # 6. Login to DockerHub
       - name: Login to DockerHub
@@ -63,11 +53,14 @@ jobs:
       # 7. Build and Push Docker Images with Dynamic Tagging
       - name: Build and Push Docker Images
         run: |
+          # Get the current commit hash for versioning
           COMMIT_HASH=$(git rev-parse --short HEAD)
           VERSION="latest"
 
+          # Tag the image with the commit hash and 'latest' version
           docker tag fastapi-application:latest ${{ secrets.DOCKER_USERNAME }}/fastapi-application:$COMMIT_HASH
           docker tag fastapi-application:latest ${{ secrets.DOCKER_USERNAME }}/fastapi-application:$VERSION
 
+          # Push the image to DockerHub
           docker push ${{ secrets.DOCKER_USERNAME }}/fastapi-application:$COMMIT_HASH
           docker push ${{ secrets.DOCKER_USERNAME }}/fastapi-application:$VERSION
