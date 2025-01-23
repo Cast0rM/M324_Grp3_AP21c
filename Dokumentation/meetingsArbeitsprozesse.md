@@ -55,3 +55,16 @@ Für das Pushen der Dokumentations Dateien ist das Branching nicht nötig.
 - Dockerfile erstellen.
 - Subtasks erstellt
 - Zeiteinschätzung
+
+### Daily-Meeting 16.01.2025
+
+Heute haben wir kein guten Meeting gemacht, zu kurz un präzise und die Organisation der verschiedenen Contributors wurden fast vergessen. Dadurch dass Herr Nussle eingegrifen und ein Feedback gegeben hat, haben wir gewisse Tasks erstellen und zuweisen können. Wir haben auch mit der Zuweisung der Meeting Dokumentations Rolle fehlgeschlagen, da niemand diese Dokumentationen gemacht hat.
+
+#### Entscheidungen die Getroffen wurden
+An diesem Tag wurden keine Entscheidungen getroffen, wir haben uns daran erinnert, dass wir unser deployment auf ein Cluster mit Kubernetes machen wollten.
+
+#### Tasks
+- System Tests mit Postman
+- CD Prozess umsetz
+- TestKonzept anpassung
+- Code Quality mit sonar / flake8
