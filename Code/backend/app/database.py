@@ -1,7 +1,13 @@
 import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from pathlib import Path
+
+dotenv_path = Path(__file__).resolve().parent.parent / ".env"
+
+load_dotenv(dotenv_path=dotenv_path)
 
 # Access environment variables injected by GitHub Secrets
 ALBUM_USERNAME = os.getenv("ALBUM_USERNAME")

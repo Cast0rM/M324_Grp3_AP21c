@@ -1,0 +1,81 @@
+version: "3.9"
+
+services:
+  bands:
+    build:
+      context: ./db/bands # Path to the Microservice 1 directory
+    container_name: bands-db
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 3s
+      retries: 5
+      start_period: 30s
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: bands_db
+    ports:
+      - "3307:3306" # Exposing on a different port to avoid conflict
+    volumes:
+      - bands_data:/var/lib/mysql # Persist data
+    networks:
+      - backnet
+
+  albums:
+    build:
+      context: ./db/albums
+    container_name: albums-db
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 3s
+      retries: 5
+      start_period: 30s
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: albums_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - albums_data:/var/lib/mysql # Persist data
+    networks:
+      - backnet
+
+  api:
+    build:
+      context: ./backend
+    env_file:
+      - .env
+    container_name: fastapi-application
+    image: fastapi-application
+    environment:
+      PORT: 8000
+      ALBUM_USERNAME: ${ALBUM_USERNAME}
+      ALBUM_PASSWORD: ${ALBUM_PASSWORD}
+      ALBUM_HOST: ${ALBUM_HOST}
+      ALBUM_PORT: ${ALBUM_PORT}
+      ALBUM_DATABASE: ${ALBUM_DATABASE}
+      BANDS_USERNAME: ${BANDS_USERNAME}
+      BANDS_PASSWORD: ${BANDS_PASSWORD}
+      BANDS_HOST: ${BANDS_HOST}
+      BANDS_PORT: ${BANDS_PORT}
+      BANDS_DATABASE: ${BANDS_DATABASE}
+    ports:
+      - "8000:8000"
+    networks:
+      - backnet
+    depends_on:
+      albums:
+        condition: service_healthy
+      bands:
+        condition: service_healthy
+    restart: "no"
+
+volumes:
+  bands_data:
+  albums_data:
+
+networks:
+  backnet:
+  frontnet:
+#docker-compose down
+# docker-compose build --no-cache
+# docker-compose up
