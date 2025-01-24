@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.main import app, get_db_bands
 from app.database import Bands_Base
+from sqlalchemy.ext.declarative import declarative_base
 
 import os
 
@@ -25,14 +26,6 @@ engine = create_engine(connect_string_bands)
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
-def override_get_db_album():
-    try:
-        db = TestingSessionLocal()
-        yield db
-    finally:
-        db.close()
-
-
 def override_get_db_bands():
     try:
         db = TestingSessionLocal()
@@ -48,11 +41,7 @@ client = TestClient(app)
 
 @pytest.fixture(scope="module", autouse=True)
 def setup_and_teardown():
-    # Create tables in the test database
-    Bands_Base.metadata.create_all(bind=engine)
-    yield
-    # Clean up the database after tests
-    Bands_Base.metadata.drop_all(bind=engine)
+    Bands_Base = declarative_base()
 
 
 def test_isBandReal():
@@ -65,12 +54,12 @@ def test_isBandReal():
         "disbanded_date": None,
     }
 
-    print(BANDS_HOST)
-    # response = client.post("/bands/", json=test_band)
-    # assert response.status_code == 200  # Ensure the band was created successfully
+    # print(BANDS_HOST)
+    response = client.post("/bands/", json=test_band)
+    assert response.status_code == 200  # Ensure the band was created successfully
 
-    # # Test the isBandReal logic by fetching the band
-    # band_id = response.json()["band_id"]  # Get the ID of the created band
-    # get_response = client.get(f"/bands/{band_id}")
-    # assert get_response.status_code == 200
-    # assert get_response.json()["name"] == test_band["name"]
+    # Test the isBandReal logic by fetching the band
+    band_id = response.json()["band_id"]  # Get the ID of the created band
+    get_response = client.get(f"/bands/{band_id}")
+    assert get_response.status_code == 200
+    assert get_response.json()["name"] == test_band["name"]
