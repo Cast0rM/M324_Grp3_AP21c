@@ -45,7 +45,11 @@ jobs:
           BANDS_DATABASE: "${{ secrets.BANDS_DATABASE_NAME }}"
           BANDS_PORT: 3306
         run: |
-          pytest test_integration.py --maxfail=5 --disable-warnings
+          echo "BANDS_USERNAME=${{ secrets.DATABASE_USERNAME }}"
+          echo "BANDS_PASSWORD=${{ secrets.DATABASE_PASSWORD }}"
+          echo "TEST_BANDS_HOST=${{ secrets.TEST_BANDS_DATABASE_URL }}"
+          echo "BANDS_DATABASE=${{ secrets.BANDS_DATABASE_NAME }}"
+          echo "BANDS_PORT=3306"
 
       # 5. Build Docker Image
       - name: Build Docker Image
