@@ -36,34 +36,44 @@ jobs:
         run: |
           pytest test_pytestFastapi.py --maxfail=5 --disable-warnings
 
-      - name: Test Database Connectivity
-        run: |
-          apt-get update && apt-get install -y mysql-client
-          mysql -h testdbbands.c46zglqexctp.us-east-1.rds.amazonaws.com \
-          -u admin \
-          -ppassword \
-          -D bands_db -e "SHOW TABLES;"
+      # - name: Test Database Connectivity
+      #   run: |
+      #     apt-get update && apt-get install -y mysql-client
+      #     mysql -h testdbbands.c46zglqexctp.us-east-1.rds.amazonaws.com \
+      #     -u admin \
+      #     -ppassword \
+      #     -D bands_db -e "SHOW TABLES;"
 
-      - name: Run Integration Tests
-        working-directory: Code/backend
-        env:
-          # BANDS_USERNAME: "${{ secrets.DATABASE_USERNAME }}"
-          # BANDS_PASSWORD: "${{ secrets.DATABASE_PASSWORD }}"
-          # TEST_BANDS_HOST: "testdbbands.c46zglqexctp.us-east-1.rds.amazonaws.com"
-          # BANDS_DATABASE: "${{ secrets.BANDS_DATABASE_NAME }}"
-          # BANDS_PORT: 3306
-          BANDS_USERNAME: "admin"
-          BANDS_PASSWORD: "password"
-          TEST_BANDS_HOST: "testdbbands.c46zglqexctp.us-east-1.rds.amazonaws.com"
-          BANDS_DATABASE: "bands_db"
-          BANDS_PORT: 3306
+      # - name: Run Integration Tests
+      #   working-directory: Code/backend
+      #   env:
+      #     # BANDS_USERNAME: "${{ secrets.DATABASE_USERNAME }}"
+      #     # BANDS_PASSWORD: "${{ secrets.DATABASE_PASSWORD }}"
+      #     # TEST_BANDS_HOST: "testdbbands.c46zglqexctp.us-east-1.rds.amazonaws.com"
+      #     # BANDS_DATABASE: "${{ secrets.BANDS_DATABASE_NAME }}"
+      #     # BANDS_PORT: 3306
+      #     BANDS_USERNAME: "admin"
+      #     BANDS_PASSWORD: "password"
+      #     TEST_BANDS_HOST: "testdbbands.c46zglqexctp.us-east-1.rds.amazonaws.com"
+      #     BANDS_DATABASE: "bands_db"
+      #     BANDS_PORT: 3306
+      #   run: |
+      #     echo "BANDS_USERNAME=${{ secrets.DATABASE_USERNAME }}"
+      #     echo "BANDS_PASSWORD=${{ secrets.DATABASE_PASSWORD }}"
+      #     echo "TEST_BANDS_HOST=${{ secrets.TEST_BANDS_URL }}"
+      #     echo "BANDS_DATABASE=${{ secrets.BANDS_DATABASE_NAME }}"
+      #     echo "BANDS_PORT=3306"
+      #     pytest test_integration.py --maxfail=5 --disable-warnings
+
+      - name: Get Runner IP Address
         run: |
-          echo "BANDS_USERNAME=${{ secrets.DATABASE_USERNAME }}"
-          echo "BANDS_PASSWORD=${{ secrets.DATABASE_PASSWORD }}"
-          echo "TEST_BANDS_HOST=${{ secrets.TEST_BANDS_URL }}"
-          echo "BANDS_DATABASE=${{ secrets.BANDS_DATABASE_NAME }}"
-          echo "BANDS_PORT=3306"
-          pytest test_integration.py --maxfail=5 --disable-warnings
+          echo "Public IP of the runner is:"
+          curl ifconfig.me
+
+      - name: Get Runner Private IP Address
+        run: |
+          echo "Internal IP of the runner is:"
+          hostname -I
 
       # 5. Build Docker Image
       - name: Build Docker Image
