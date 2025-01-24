@@ -12,17 +12,45 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
+      # 1. Checkout the repository
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      # 2. Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
+      # 3. Install Python dependencies
+      - name: Install Dependencies
+        working-directory: Code/backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # 4. Run Integration Tests
+      - name: Run Integration Tests
+        env:
+          BANDS_USERNAME: "${{ secrets.DATABASE_USERNAME }}"
+          BANDS_PASSWORD: "${{ secrets.DATABASE_PASSWORD }}"
+          TEST_BANDS_HOST: "${{ secrets.TEST_BANDS_URL }}"
+          BANDS_DATABASE: "${{ secrets.BANDS_DATABASE_NAME }}"
+          BANDS_PORT: 3306
+        run: |
+          pytest test_integration.py --maxfail=5 --disable-warnings
+
+      # 5. Pull Latest Docker Image
       - name: Pull Latest Docker Image
         run: |
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-application:latest || exit 1
 
+      # 6. Stop and Remove Existing Container
       - name: Stop and Remove Existing Container
         run: |
           sudo docker rm -f fastapi-application || true
 
+      # 7. Run New Docker Container
       - name: Run New Docker Container
         run: |
           sudo docker run -d \
