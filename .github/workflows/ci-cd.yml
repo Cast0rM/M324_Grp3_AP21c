@@ -41,7 +41,7 @@ jobs:
         env:
           BANDS_USERNAME: "${{ secrets.DATABASE_USERNAME }}"
           BANDS_PASSWORD: "${{ secrets.DATABASE_PASSWORD }}"
-          TEST_BANDS_HOST: "${{ secrets.TEST_BANDS_DATABASE_URL }}"
+          TEST_BANDS_HOST: "${{ secrets.TEST_BANDS_URL }}"
           BANDS_DATABASE: "${{ secrets.BANDS_DATABASE_NAME }}"
           BANDS_PORT: 3306
         run: |
