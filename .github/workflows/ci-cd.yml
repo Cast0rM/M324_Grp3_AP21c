@@ -39,10 +39,15 @@ jobs:
       - name: Run Integration Tests
         working-directory: Code/backend
         env:
-          BANDS_USERNAME: "${{ secrets.DATABASE_USERNAME }}"
-          BANDS_PASSWORD: "${{ secrets.DATABASE_PASSWORD }}"
+          # BANDS_USERNAME: "${{ secrets.DATABASE_USERNAME }}"
+          # BANDS_PASSWORD: "${{ secrets.DATABASE_PASSWORD }}"
+          # TEST_BANDS_HOST: "testdbbands.c46zglqexctp.us-east-1.rds.amazonaws.com"
+          # BANDS_DATABASE: "${{ secrets.BANDS_DATABASE_NAME }}"
+          # BANDS_PORT: 3306
+          BANDS_USERNAME: "admin"
+          BANDS_PASSWORD: "password"
           TEST_BANDS_HOST: "testdbbands.c46zglqexctp.us-east-1.rds.amazonaws.com"
-          BANDS_DATABASE: "${{ secrets.BANDS_DATABASE_NAME }}"
+          BANDS_DATABASE: "bands_db"
           BANDS_PORT: 3306
         run: |
           echo "BANDS_USERNAME=${{ secrets.DATABASE_USERNAME }}"

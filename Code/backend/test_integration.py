@@ -15,6 +15,13 @@ BANDS_PORT = os.getenv("BANDS_PORT", 3306)  # Default to 3306 if not provided
 BANDS_DATABASE = os.getenv("BANDS_DATABASE")
 
 
+# BANDS_USERNAME = "admin"
+# BANDS_PASSWORD = "password"
+# TEST_BANDS_HOST = "testdbbands.c46zglqexctp.us-east-1.rds.amazonaws.com"
+# BANDS_DATABASE = "bands_db"
+# BANDS_PORT = 3306
+
+
 connect_string_bands = (
     f"mysql+pymysql://{BANDS_USERNAME}:{BANDS_PASSWORD}@"
     f"{BANDS_HOST}:{BANDS_PORT}/{BANDS_DATABASE}?charset=utf8mb4"
