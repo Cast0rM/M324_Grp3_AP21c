@@ -30,11 +30,22 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # 4. Run Tests
-      - name: Run Tests
+      # 4. Run Unit  Tests
+      - name: Run Unit Tests
         working-directory: Code/backend
         run: |
           pytest test_pytestFastapi.py --maxfail=5 --disable-warnings
+
+      - name: Run Integration Tests
+        working-directory: Code/backend
+        env:
+          BANDS_USERNAME: "${{ secrets.DATABASE_USERNAME }}"
+          BANDS_PASSWORD: "${{ secrets.DATABASE_PASSWORD }}"
+          TEST_BANDS_HOST: "${{ secrets.TEST_BANDS_DATABASE_URL }}"
+          BANDS_DATABASE: "${{ secrets.BANDS_DATABASE_NAME }}"
+          BANDS_PORT: 3306
+        run: |
+          pytest test_integration.py --maxfail=5 --disable-warnings
 
       # 5. Build Docker Image
       - name: Build Docker Image
