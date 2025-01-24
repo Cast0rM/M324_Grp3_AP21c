@@ -50,7 +50,6 @@ jobs:
           echo "TEST_BANDS_HOST=${{ secrets.TEST_BANDS_URL }}"
           echo "BANDS_DATABASE=${{ secrets.BANDS_DATABASE_NAME }}"
           echo "BANDS_PORT=3306"
-
           pytest test_integration.py --maxfail=5 --disable-warnings
 
       # 5. Build Docker Image

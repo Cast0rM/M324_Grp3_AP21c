@@ -64,6 +64,8 @@ def test_isBandReal():
         "members_count": 4,
         "disbanded_date": None,
     }
+
+    print(BANDS_HOST)
     response = client.post("/bands/", json=test_band)
     assert response.status_code == 200  # Ensure the band was created successfully
 
