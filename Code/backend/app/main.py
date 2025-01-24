@@ -38,30 +38,29 @@ def get_albums(db: Session = Depends(get_db_album)):
     "/bands/",
     response_model=List[schemas.ReadBand],
     responses={
-        404: {"model": schemas.MessageNotFound,
-              "description": "The item was not found"}
+        404: {"model": schemas.MessageNotFound, "description": "The item was not found"}
     },
 )
 def get_bands(db: Session = Depends(get_db_bands)):
-    try:
-        bands = CRUD.get_bands(db=db)
-        if not bands:
-            return JSONResponse(status_code=404,
-                                content={"message": "liste leer"})
-        return bands
-    except SQLAlchemyError as e:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Database Server Error",
-        ) from e
+    # try:
+    bands = CRUD.get_bands(db=db)
+    if not bands:
+        return JSONResponse(status_code=404, content={"message": "liste leer"})
+    return bands
+
+
+# except SQLAlchemyError as e:
+#     raise HTTPException(
+#         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+#         detail="Database Server Error",
+#     ) from e
 
 
 @app.get(
     "/bands/{band_id}",
     response_model=schemas.ReadBand,
     responses={
-        404: {"model": schemas.MessageNotFound,
-              "description": "The item was not found"}
+        404: {"model": schemas.MessageNotFound, "description": "The item was not found"}
     },
 )
 def get_bands_id(band_id: int, db: Session = Depends(get_db_bands)):
@@ -90,13 +89,11 @@ def post_bands(band: schemas.BandCreate, db: Session = Depends(get_db_bands)):
             detail="Internal server error",
         ) from e
     except ValidationError as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                            detail=str(e))
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
 @app.post("/albums/", response_model=schemas.Albumbase)
-def post_albums(album: schemas.AlbumCreate,
-                db: Session = Depends(get_db_album)):
+def post_albums(album: schemas.AlbumCreate, db: Session = Depends(get_db_album)):
     try:
         if isBandReal(album.band_id) == 200:
             new_album = CRUD.post_album(db=db, album=album)
@@ -107,8 +104,7 @@ def post_albums(album: schemas.AlbumCreate,
             detail="Internal server error",
         ) from e
     except ValidationError as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                            detail=str(e))
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
 def isBandReal(id: int):
