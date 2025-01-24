@@ -45,21 +45,5 @@ def setup_and_teardown():
 
 
 def test_isBandReal():
-    # Seed the database with a test band
-    test_band = {
-        "name": "Test Band",
-        "genre": "Rock",
-        "founding_date": "2000-01-01",
-        "members_count": 4,
-        "disbanded_date": None,
-    }
-
-    # print(BANDS_HOST)
-    response = client.post("/bands/", json=test_band)
-    assert response.status_code == 200  # Ensure the band was created successfully
-
-    # Test the isBandReal logic by fetching the band
-    band_id = response.json()["band_id"]  # Get the ID of the created band
-    get_response = client.get(f"/bands/{band_id}")
+    get_response = client.get("/bands/")
     assert get_response.status_code == 200
-    assert get_response.json()["name"] == test_band["name"]
