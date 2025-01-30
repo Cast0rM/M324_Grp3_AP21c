@@ -64,8 +64,12 @@ jobs:
         run: |
           sudo apt-get install -y nodejs npm
           npm install -g newman
-      
-      
+
+      # 9. Run Postman System Tests
+      - name: Run Postman Tests
+        working-directory: Code
+        run: |
+          newman run collection.json
 
       # 10. Run Integration Tests (Optional)
       # - name: Run Integration Tests
@@ -97,12 +101,6 @@ jobs:
 
           docker push ${{ secrets.DOCKER_USERNAME }}/fastapi-application:$COMMIT_HASH
           docker push ${{ secrets.DOCKER_USERNAME }}/fastapi-application:$VERSION
-
-      # 9. Run Postman System Tests
-      - name: Run Postman Tests
-        working-directory: Code
-        run: |
-          newman run collection.json
 
       # 14. Deploy to Production Server
       # - name: Deploy to Production Server
