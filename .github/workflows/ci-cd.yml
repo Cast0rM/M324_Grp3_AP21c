@@ -105,7 +105,7 @@ jobs:
       - name: Run Postman Tests
         working-directory: Code
         run: |
-          newman run collection-test.json
+          newman run collection.json
 
       # 14. Deploy to Production Server
       # - name: Deploy to Production Server
