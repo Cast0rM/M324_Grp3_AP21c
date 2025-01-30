@@ -99,7 +99,7 @@ jobs:
       # 8.5. Run New Docker Container
       - name: Run New Docker Container
         run: |
-          run: docker-compose up
+          docker-compose up
 
       # 9. Run Postman System Tests
       - name: Run Postman Tests
