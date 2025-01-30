@@ -114,6 +114,12 @@ jobs:
             -e BANDS_PORT=3306 \
             -e BANDS_DATABASE=${{ secrets.BANDS_DATABASE_NAME }} \
             ${{ secrets.DOCKER_USERNAME }}/fastapi-application:latest
+          
+          sleep 10  # Zeit geben, damit FastAPI startet
+
+          until curl --silent --fail http://localhost:8000/health; do
+            sleep 5
+          done
 
       # 9. Run Postman System Tests
       - name: Run Postman Tests
