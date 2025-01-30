@@ -67,7 +67,7 @@ jobs:
 
       # 9. Run Postman System Tests
       - name: Run Postman Tests
-        working-directory: Code/tests
+        working-directory: Code
         run: |
           newman run collection.json
 
