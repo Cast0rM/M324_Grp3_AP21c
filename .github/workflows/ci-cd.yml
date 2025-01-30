@@ -99,21 +99,7 @@ jobs:
       # 8.5. Run New Docker Container
       - name: Run New Docker Container
         run: |
-          sudo docker run -d \
-            --restart unless-stopped \
-            -p 8000:8000 \
-            --name fastapi-application \
-            -e ALBUM_USERNAME=${{ secrets.DATABASE_USERNAME }} \
-            -e ALBUM_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
-            -e ALBUM_HOST=${{ secrets.ALBUM_DATABASE_URL }} \
-            -e ALBUM_PORT=3306 \
-            -e ALBUM_DATABASE=${{ secrets.ALBUM_DATABASE_NAME }} \
-            -e BANDS_USERNAME=${{ secrets.DATABASE_USERNAME }} \
-            -e BANDS_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
-            -e BANDS_HOST=${{ secrets.BANDS_DATABASE_URL }} \
-            -e BANDS_PORT=3306 \
-            -e BANDS_DATABASE=${{ secrets.BANDS_DATABASE_NAME }} \
-            ${{ secrets.DOCKER_USERNAME }}/fastapi-application:latest
+          run: docker-compose up
 
       # 9. Run Postman System Tests
       - name: Run Postman Tests
