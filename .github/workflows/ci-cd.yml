@@ -98,6 +98,7 @@ jobs:
 
       # 8.5. Run New Docker Container
       - name: Run New Docker Container
+        with: "./Code/docker-compose.dev.yml"
         run: |
           docker compose up
 
