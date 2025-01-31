@@ -70,6 +70,9 @@ jobs:
         working-directory: Code
         run: docker compose -f docker-compose.dev2.yml up -d
 
+      - name: docckckckck
+        run: docker ps -a
+
       # 9. Run Postman System Tests
       - name: Run Postman Tests
         working-directory: Code
