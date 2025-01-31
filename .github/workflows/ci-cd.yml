@@ -72,7 +72,6 @@ jobs:
 
       - name: docckckckck
         run: |
-          docker ps -a
           docker logs fastapi-application
 
 
