@@ -68,7 +68,7 @@ jobs:
       # 8.5. compose
       - name: Start test api
         working-directory: Code
-        run: docker-compose up -d fastapi-application --file docker-compose.dev.yml
+        run: docker compose up -d fastapi-application --file docker-compose.dev.yml
 
       # 9. Run Postman System Tests
       - name: Run Postman Tests
