@@ -73,9 +73,8 @@ jobs:
       - name: docckckckck
         run: |
           docker ps -a
-          curl http://localhost:8000
           docker logs fastapi-application
-          
+
 
       # 9. Run Postman System Tests
       - name: Run Postman Tests
