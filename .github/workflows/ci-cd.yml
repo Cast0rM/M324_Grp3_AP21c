@@ -65,6 +65,12 @@ jobs:
           sudo apt-get install -y nodejs npm
           npm install -g newman
 
+      # 9. Run Postman System Tests
+      - name: Run Postman Tests
+        working-directory: Code
+        run: |
+          newman run collection.json
+
       # 10. Run Integration Tests (Optional)
       # - name: Run Integration Tests
       #   working-directory: Code/backend
@@ -95,37 +101,6 @@ jobs:
 
           docker push ${{ secrets.DOCKER_USERNAME }}/fastapi-application:$COMMIT_HASH
           docker push ${{ secrets.DOCKER_USERNAME }}/fastapi-application:$VERSION
-
-      # 8.5. Run New Docker Container
-      - name: Run New Docker Container
-        run: |
-          sudo docker run -d \
-            --restart unless-stopped \
-            -p 8000:8000 \
-            --name fastapi-application \
-            -e ALBUM_USERNAME=${{ secrets.DATABASE_USERNAME }} \
-            -e ALBUM_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
-            -e ALBUM_HOST=${{ secrets.ALBUM_DATABASE_URL }} \
-            -e ALBUM_PORT=3306 \
-            -e ALBUM_DATABASE=${{ secrets.ALBUM_DATABASE_NAME }} \
-            -e BANDS_USERNAME=${{ secrets.DATABASE_USERNAME }} \
-            -e BANDS_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
-            -e BANDS_HOST=${{ secrets.BANDS_DATABASE_URL }} \
-            -e BANDS_PORT=3306 \
-            -e BANDS_DATABASE=${{ secrets.BANDS_DATABASE_NAME }} \
-            ${{ secrets.DOCKER_USERNAME }}/fastapi-application:latest
-          
-          sleep 10  # Zeit geben, damit FastAPI startet
-
-          until curl --silent --fail http://localhost:8000/health; do
-            sleep 5
-          done
-
-      # 9. Run Postman System Tests
-      - name: Run Postman Tests
-        working-directory: Code
-        run: |
-          newman run collection.json
 
       # 14. Deploy to Production Server
       # - name: Deploy to Production Server
